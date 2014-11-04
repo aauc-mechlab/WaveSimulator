@@ -1,4 +1,4 @@
 WavesSimulator
 ==============
 
-A framework that allows for reproducing in a laboratory setup the same challenging operation scenario of controlling offshore cranes
+In this work, a framework that allows for reproducing in a laboratory setup the same challenging operation scenario of controlling offshore cranes is presented. This framework can be used for testing different control approaches and for training purposes. The system consists of an industrial robot, the Kuka KR 6 R900 SIXX (KR AGILUS) manipulator, and of a 3 degrees of freedom motion platform. The motion platform is used to simulate the waves effects, while the robotic arm is controlled by the user with a joystick. The waves contribution is monitored by means of an accelerometer mounted on the platform and it is used as a negative input to the manipulator's control algorithm so that active heave compensation methods can be achieved. Concerning the system architecture, the presented framework is built on open-source software and hardware. The control software is realised by applying strict multi-threading criteria to meet demanding real-time requirements.
