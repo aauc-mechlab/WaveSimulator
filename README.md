@@ -2,9 +2,13 @@ Authors
 ================
 F. Sanfilippo, L. I. Hatledal, H. Zhang, W. Rekdalsbakken and K. Y. Pettersen
 
+Students
+================
+Håkon Østrem, Håkon Eikrem and Bjarne Humlen
+
 Acknowledgements
 ================
-The authors gratefully acknowledge the contribution of Ottar Laurits Osen in the design of the platform. The contribution of the students Håkon Østrem, Håkon Eikrem and Bjarne Humlen in the implementation of this work is also highly appreciated by the authors. This work was partly supported by the Research Council of Norway through the Centres of Excellence funding scheme, project No. 223254 - AMOS.
+The authors gratefully acknowledge the contribution of Ottar Laurits Osen in the design of the platform. This work was partly supported by the Research Council of Norway through the Centres of Excellence funding scheme, project No. 223254 - AMOS.
 
 WavesSimulator
 ==============
