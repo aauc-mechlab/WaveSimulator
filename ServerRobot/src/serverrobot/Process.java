@@ -45,7 +45,6 @@ public class Process extends Thread {
     private final double scaleFactor = 0.01;
     private int counter = -1;
     private int count = 0;
-    
 // Limit the set points world coordinates for robot
     private final double x_MIN = 0.45,
             x_MAX = 1.00,
