@@ -17,4 +17,4 @@ In this work, a framework is presented that makes it possible to reproduce the c
 
 Demo Video
 ================
-http://youtu.be/AVKkWk8Dcv4
+http://youtu.be/EJXgOPpp4a4
