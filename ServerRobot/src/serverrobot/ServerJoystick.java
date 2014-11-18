@@ -6,6 +6,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,11 +25,13 @@ public class ServerJoystick extends Thread {
     private final int port = 1234;
     private InetAddress ipAddress;
     private DatagramPacket receivePacket;
+    private long t0 = 0;
+    private long t1;
 
     /**
      * Constructor to create object.
-     * 
-     * @param event 
+     *
+     * @param event
      */
     public ServerJoystick(MyEvent event) {
         this.event = event;
@@ -81,14 +84,18 @@ public class ServerJoystick extends Thread {
             } catch (IOException ex) {
                 System.out.println("Error on receiving packet!!");
             }
+
+            t1 = System.currentTimeMillis();
+//            System.out.println("Joystick time between new variables: " + (t1 - t0));
+            t0 = t1;
         }
     }
 
     /**
      * Checks the value of the joystick and corrects it.
-     * 
+     *
      * @param temp
-     * @return 
+     * @return
      */
     public double[] checkLimitsAndCorrectValue(double[] temp) {
         double tempList[] = new double[3];
@@ -108,8 +115,8 @@ public class ServerJoystick extends Thread {
 
     /**
      * Set the JoyStickPos
-     * 
-     * @param temp 
+     *
+     * @param temp
      */
     public void setJoystickPos(double[] temp) {
         joystickPos = temp;
@@ -117,8 +124,8 @@ public class ServerJoystick extends Thread {
 
     /**
      * Returns the joystick value.
-     * 
-     * @return 
+     *
+     * @return
      */
     public double[] getJoystickPos() {
         return joystickPos.clone();

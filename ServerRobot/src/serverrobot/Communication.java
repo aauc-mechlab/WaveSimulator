@@ -156,8 +156,8 @@ public class Communication extends Thread {
             Logger.getLogger(Communication.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        System.out.print("Robot new pos relative to its current position:   ");
-        System.out.println(Arrays.toString(gains));
+//        System.out.print("Robot new pos relative to its current position:   ");
+//        System.out.println(Arrays.toString(gains));
 
         // reset flags so the receiver theads can set new values and the process 
         // calculate a new position to the robot
@@ -166,7 +166,7 @@ public class Communication extends Thread {
         event.setState();
 
         T1 = System.currentTimeMillis();
-//        System.out.println("Time between each new robot pos: " + (T1 - T0));
+        System.out.println("Time between each new robot pos: " + (T1 - T0));
         T0 = T1;
         t0 = System.currentTimeMillis();
     }

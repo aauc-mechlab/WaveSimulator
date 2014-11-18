@@ -2,6 +2,8 @@ package serverrobot;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.wimpi.modbus.ModbusException;
 import net.wimpi.modbus.ModbusSlaveException;
 import net.wimpi.modbus.io.ModbusTCPTransaction;
@@ -29,6 +31,8 @@ public class Modbus extends Thread {
     private double zOffset = 0;
     private double actualRoll = 0;
     private double actualPitch = 0;
+    private long t0 = 0;
+    private long t1;
 
     /**
      * Constructor to make a new object.
@@ -95,6 +99,14 @@ public class Modbus extends Thread {
                 System.out.println("ModbusSlaveException");
             } catch (ModbusException ex) {
                 System.out.println("ModbusExceptipon: ");
+            }
+            t1 = System.currentTimeMillis();
+//            System.out.println("Modbus time between new variables: " + (t1 - t0));
+            t0 = t1;
+            try {
+                Thread.sleep(10); // to avoid reading to fast.. 
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Modbus.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

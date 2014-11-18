@@ -46,12 +46,13 @@ public class Process extends Thread {
     private int counter = -1;
     private int count = 0;
 // Limit the set points world coordinates for robot
-    private final double x_MIN = 0.45,
-            x_MAX = 1.00,
-            y_MIN = 0.45,
-            y_MAX = 0.45,
-            z_MIN = 0.35,
-            z_MAX = 1.00;
+    private final double 
+            x_MIN = 0.55,
+            x_MAX = 0.70,
+            y_MIN = -0.2,
+            y_MAX = 0.15,
+            z_MIN = 0.55,
+            z_MAX = 0.75;
 
     private double roll, pitch;
     private int listSize = 5000;  // number of points in the list that gets saved
@@ -163,8 +164,10 @@ public class Process extends Thread {
                     // update values in the live graph
                     if(dynamicGraph != null){
                         //System.out.println("Update values");
-                        dynamicGraph.updateValue("roll", roll);
-                        dynamicGraph.updateValue("pitch", pitch);
+                        dynamicGraph.updateValue("roll", platformAngles[0]);
+                        dynamicGraph.updateValue("pitch", platformAngles[1]);
+                        dynamicGraph.updateValue("rollAct", roll);
+                        dynamicGraph.updateValue("pitchAct", pitch);
                         dynamicGraph.updateValue("setX", setPoint[0]);
                         dynamicGraph.updateValue("setY", setPoint[1]);
                         dynamicGraph.updateValue("setZ", setPoint[2]);
@@ -191,14 +194,23 @@ public class Process extends Thread {
             temp[i] = setPoint[i] + (joystickPos[i] * scaleFactor);
         }
         // create a box to avoid the set point to go too far 
-        if ((x_MIN < setPoint[0]) && (setPoint[0] < x_MAX)) {
-            temp[0] = setPoint[0] + (joystickPos[0] * scaleFactor);
+        if (temp[0] < x_MIN) {
+            temp[0] = x_MIN;
         }
-        if ((y_MIN < setPoint[1]) && (setPoint[1] < y_MAX)) {
-            temp[1] = setPoint[1] + (joystickPos[1] * scaleFactor);
+        if (temp[0] > x_MAX) {
+            temp[0] = x_MAX;
         }
-        if ((z_MIN < setPoint[2]) && (setPoint[2] < z_MAX)) {
-            temp[2] = setPoint[2] + (joystickPos[2] * scaleFactor);
+        if (temp[1] < y_MIN) {
+            temp[1] = y_MIN;
+        }
+        if (temp[1] > y_MAX) {
+            temp[1] = y_MAX;
+        }
+        if (temp[2] < z_MIN) {
+            temp[2] = z_MIN;
+        }
+        if (temp[2] > z_MAX) {
+            temp[2] = z_MAX;
         }
         return temp;
     }
@@ -266,10 +278,11 @@ public class Process extends Thread {
      * in a seperate windos.
      * Can show platform angles (roll and pitch) if you change the string in 
      * getDynamicGraphFrame. "Position" = XYZ values, "Platform" = roll and pitch
+     * @param typeOfPlot
      */
-    public void showLiveGraph(){
+    public void showLiveGraph(String typeOfPlot){
         dynamicGraph = new DynamicGraph();
-        JFrame plotFrame = dynamicGraph.getDynamicGraphFrame("Position");
+        JFrame plotFrame = dynamicGraph.getDynamicGraphFrame(typeOfPlot);
         plotFrame.pack();
         RefineryUtilities.centerFrameOnScreen(plotFrame);
         plotFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

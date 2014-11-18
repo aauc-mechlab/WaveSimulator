@@ -11,7 +11,7 @@ import java.util.Enumeration;
 
 /**
  * Classs to read the data from the Arduino over serial communication.
- * 
+ *
  * @author Hakon eikrem
  */
 public class AccReader extends Thread implements SerialPortEventListener {
@@ -24,12 +24,14 @@ public class AccReader extends Thread implements SerialPortEventListener {
     long t0 = 0;
     long t1;
     private SerialPort serialPort;
+    private int counter = 0;
+    private double offsetPitch = 0;
+    private double offsetRoll = 0;
 
-    
     /**
      * Constructor to make a new object.
-     * 
-     * @param event 
+     *
+     * @param event
      */
     public AccReader(MyEvent event) {
         this.event = event;
@@ -43,7 +45,7 @@ public class AccReader extends Thread implements SerialPortEventListener {
     };
 
     /**
-     * This method initializing the serial port. 
+     * This method initializing the serial port.
      */
     private void initialize() {
         CommPortIdentifier portId = null;
@@ -95,18 +97,15 @@ public class AccReader extends Thread implements SerialPortEventListener {
 
     /**
      * Handle an event on the serial port. Read the data and print it.
-     * 
+     *
      * @param oEvent
      */
     public synchronized void serialEvent(SerialPortEvent oEvent) {
 
         String part1;
         String part2;
-        int counter = 0;
         double roll;
         double pitch;
-        double offsetPitch = 0;
-        double offsetRoll = 0;
         double tempPos[] = new double[3];
 
         try {
@@ -118,22 +117,24 @@ public class AccReader extends Thread implements SerialPortEventListener {
             roll = Float.parseFloat(part1);
             pitch = Float.parseFloat(part2);
 
-            if (counter < 15) {
-                offsetRoll = roll;
-                offsetPitch = pitch;
-                counter++;
-            }
-            roll = roll - offsetRoll;
-            pitch = pitch - offsetPitch;
+//            if (counter < 15) {
+//                offsetRoll = roll;
+//                offsetPitch = pitch;
+//                counter++;
+//                System.out.println("Offset = " + offsetRoll + "," + offsetPitch);
+//            }
+//            roll = roll - offsetRoll;
+//            pitch = pitch - offsetPitch;
 
             roll = (int) (roll * 10);
             roll = (double) (roll / 10);
             pitch = (int) (pitch * 10);
             pitch = (double) (pitch / 10);
 
-            tempPos[0] = roll;//roll;
-            tempPos[1] = -pitch;//pitch;
+            tempPos[0] = roll+3;//roll;
+            tempPos[1] = -pitch-0.5;//pitch;
             tempPos[2] = 0;
+           // System.out.println(Arrays.toString(tempPos));
 
             if (event.getPlatformAnglesFlag() == MyEventState.DOWN) {
                 setPlatformPos(tempPos);
@@ -151,8 +152,8 @@ public class AccReader extends Thread implements SerialPortEventListener {
 
     /**
      * Method to set the platformPos.
-     * 
-     * @param temp 
+     *
+     * @param temp
      */
     public void setPlatformPos(double[] temp) {
         platformPos = temp;
@@ -160,8 +161,8 @@ public class AccReader extends Thread implements SerialPortEventListener {
 
     /**
      * Returning roll and Pitch from the platform
-     * 
-     * @return  
+     *
+     * @return
      */
     public double[] getPlatformPos() {
         return platformPos.clone();

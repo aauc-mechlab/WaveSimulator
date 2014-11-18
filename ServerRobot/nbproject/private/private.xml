@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/D:/HIALS/Semester%205/Sanntids%20datateknikk/ServerRobot/src/serverrobot/MyEvent.java</file>
+            <file>file:/D:/HIALS/Semester%205/Sanntids%20datateknikk/ServerRobot/src/serverrobot/ServerJoystick.java</file>
+            <file>file:/D:/HIALS/Semester%205/Sanntids%20datateknikk/ServerRobot/src/serverrobot/Communication.java</file>
             <file>file:/D:/HIALS/Semester%205/Sanntids%20datateknikk/ServerRobot/src/serverrobot/Process.java</file>
             <file>file:/D:/HIALS/Semester%205/Sanntids%20datateknikk/ServerRobot/src/serverrobot/Init.java</file>
+            <file>file:/D:/HIALS/Semester%205/Sanntids%20datateknikk/ServerRobot/src/serverrobot/Modbus.java</file>
             <file>file:/D:/HIALS/Semester%205/Sanntids%20datateknikk/ServerRobot/src/serverrobot/DynamicGraph.java</file>
             <file>file:/D:/HIALS/Semester%205/Sanntids%20datateknikk/ServerRobot/src/serverrobot/GUI.java</file>
+            <file>file:/D:/HIALS/Semester%205/Sanntids%20datateknikk/ServerRobot/src/serverrobot/AccReader.java</file>
         </group>
     </open-files>
 </project-private>
