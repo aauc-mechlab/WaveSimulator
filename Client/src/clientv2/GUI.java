@@ -1,0 +1,485 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package clientv2;
+
+import com.orsoncharts.interaction.InteractiveElementType;
+import static java.awt.Color.BLACK;
+import static java.awt.Color.WHITE;
+import java.awt.GridLayout;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.ui.RefineryUtilities;
+
+/**
+ *
+ * @author Humlen
+ */
+public class GUI extends javax.swing.JFrame {
+
+    private TimeSeries pitch = new TimeSeries("Roll", Millisecond.class);
+    private TimeSeries roll = new TimeSeries("Pitch", Millisecond.class);
+    private TimeSeries setX = new TimeSeries("x", Millisecond.class);
+    private TimeSeries setY = new TimeSeries("y", Millisecond.class);
+    private TimeSeries setZ = new TimeSeries("z", Millisecond.class);
+    private TimeSeries actualX = new TimeSeries("Actual x", Millisecond.class);
+    private TimeSeries actualY = new TimeSeries("Actual y", Millisecond.class);
+    private TimeSeries actualZ = new TimeSeries("Actual z", Millisecond.class);
+    private TimeSeriesCollection rollGraph = new TimeSeriesCollection();
+    private TimeSeriesCollection pitchGraph = new TimeSeriesCollection();
+    private TimeSeriesCollection xGraph = new TimeSeriesCollection();
+    private TimeSeriesCollection yGraph = new TimeSeriesCollection();
+    private TimeSeriesCollection zGraph = new TimeSeriesCollection();
+
+    /**
+     * Creates a new GUI
+     */
+    public GUI() {
+        initComponents();
+        RefineryUtilities.centerFrameOnScreen(this);
+        
+        jLabel4.setVisible(false);
+
+        rollGraph.addSeries(roll);
+        pitchGraph.addSeries(pitch);
+
+        xGraph.addSeries(setX);
+        xGraph.addSeries(actualX);
+
+        yGraph.addSeries(setY);
+        yGraph.addSeries(actualY);
+
+        zGraph.addSeries(setZ);
+        zGraph.addSeries(actualZ);
+    }
+
+    /**
+     * Updates the roll value
+     *
+     * @param roll
+     */
+    public void updateRoll(double roll) {
+        this.roll.addOrUpdate(new Millisecond(), roll);
+    }
+
+    /**
+     * Updates the pitch value
+     *
+     * @param pitch
+     */
+    public void updatePitch(double pitch) {
+        this.pitch.addOrUpdate(new Millisecond(), pitch);
+    }
+
+    /**
+     * Updates the setX value
+     *
+     * @param setX
+     */
+    public void updateSetX(double setX) {
+        this.setX.addOrUpdate(new Millisecond(), setX);
+    }
+
+    /**
+     * Updates the setY value
+     *
+     * @param setY
+     */
+    public void updateSetY(double setY) {
+        this.setY.addOrUpdate(new Millisecond(), setY);
+    }
+
+    /**
+     * Updates the setZ value
+     *
+     * @param setZ
+     */
+    public void updateSetZ(double setZ) {
+        this.setZ.addOrUpdate(new Millisecond(), setZ);
+    }
+
+    /**
+     * Updates the actualX value
+     *
+     * @param actualX
+     */
+    public void updateActualX(double actualX) {
+        this.actualX.addOrUpdate(new Millisecond(), actualX);
+    }
+
+    /**
+     * Updates the actualY value
+     *
+     * @param actualY
+     */
+    public void updateActualY(double actualY) {
+        this.actualY.addOrUpdate(new Millisecond(), actualY);
+    }
+
+    /**
+     * Updates the actualZ value
+     *
+     * @param actualZ
+     */
+    public void updateActualZ(double actualZ) {
+        this.actualZ.addOrUpdate(new Millisecond(), actualZ);
+    }
+
+    /**
+     * Creates a chart
+     *
+     * @param TS
+     * @param GraphName
+     * @return
+     */
+    public JFreeChart createChart(TimeSeriesCollection TS, String GraphName, double minRange,double maxRange) {
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(
+                GraphName,
+                "Time",
+                "Value",
+                TS,
+                true,
+                true,
+                false);
+        final XYPlot plot = chart.getXYPlot();
+        ValueAxis axis = plot.getDomainAxis();
+        plot.getRangeAxis().setRange(minRange, maxRange);
+        plot.setBackgroundPaint(WHITE);
+        plot.setDomainMinorGridlinePaint(BLACK);
+        plot.setDomainGridlinePaint(BLACK);
+        plot.setRangeMinorGridlinePaint(BLACK);
+        plot.setRangeGridlinesVisible(true);
+        
+        axis.setFixedAutoRange(20000.0);
+
+        return chart;
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jButton7 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Enter IP-Address");
+
+        jButton4.setText("Enter");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setText("192.168.2.5");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Enter port number");
+
+        jTextField2.setText("1234");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("EXIT");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Enter correct IP-address and/or port number");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextField1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jTextField2)))
+                            .addComponent(jLabel4)
+                            .addComponent(jButton4))
+                        .addGap(0, 143, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(4, 4, 4)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jButton7)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Options", jPanel1);
+
+        jButton1.setText("Platform pos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Robot pos");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setText("Exit");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 176, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton8)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addComponent(jButton8)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Graph", jPanel2);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * This button creates a new JFrame to show the roll and pitch graph
+     *
+     * @param evt
+     */
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        JFreeChart chart = createChart(rollGraph, "Roll",-5,5);
+        JFreeChart chart2 = createChart(pitchGraph, "Pitch",-5,5);
+        ChartPanel chartPanel = new ChartPanel(chart);
+        ChartPanel chartPanel2 = new ChartPanel(chart2);
+        GridLayout layout = new GridLayout(2, 1);
+        JPanel panel = new JPanel();
+        panel.setLayout(layout);
+        panel.add(chartPanel);
+        panel.add(chartPanel2);
+        
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
+//        Test test = new Test(this);
+//        test.start();
+//        
+    }//GEN-LAST:event_jButton1ActionPerformed
+    /**
+     * This button creates a new JFrame to show the x, y and z coordinates in a graph
+     * @param evt
+     */
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        JFreeChart chart = createChart(xGraph, "X",0.5,0.8);
+        JFreeChart chart2 = createChart(yGraph, "Y",-0.3,0.2);
+        JFreeChart chart3 = createChart(zGraph, "Z",0.5,0.8);
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        ChartPanel chartPanel2 = new ChartPanel(chart2);
+        ChartPanel chartPanel3 = new ChartPanel(chart3);
+
+        GridLayout layout = new GridLayout(3, 1);
+        JPanel panel = new JPanel();
+        panel.setLayout(layout);
+        panel.add(chartPanel);
+        panel.add(chartPanel2);
+        panel.add(chartPanel3);
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    /**
+     * This button start up all the threads if you have entered a valid ip-address and port for the UDP connection
+     * @param evt 
+     */
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+
+        int indexOfDot = jTextField1.getText().indexOf('.');
+        if (indexOfDot != 3 || jTextField1.getText().endsWith(".") || jTextField2.getText().equals("")) {
+            jLabel4.setVisible(true);
+        }
+        if (indexOfDot == 3 && !jTextField1.getText().endsWith(".")) {
+            jLabel4.setVisible(false);
+            JoystickReader joystickReader = new JoystickReader(jTextField1.getText(), jTextField2.getText());           
+            joystickReader.start();
+            Server server = new Server(this);
+            server.start();
+
+        }
+
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    /**
+     * this button close the program
+     * @param evt 
+     */
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+       System.exit(0);
+    }//GEN-LAST:event_jButton8ActionPerformed
+/**
+ * This buton close the program
+ * @param evt 
+ */
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+       System.exit(0);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new GUI().setVisible(true);
+
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    // End of variables declaration//GEN-END:variables
+}
