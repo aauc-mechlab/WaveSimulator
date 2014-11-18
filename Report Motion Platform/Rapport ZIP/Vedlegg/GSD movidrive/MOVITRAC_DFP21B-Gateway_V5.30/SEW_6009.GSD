@@ -1,0 +1,449 @@
+;
+;===========================================================================
+; GSD file for SEW Profibus Gateway DFP/DFS (inkl. Profibus DPV1)
+;
+; Version:          V5.30 
+; Release Date:  12.05.2007
+;
+;
+; SEW-EURODRIVE
+; Technical support Electronics:
+;     Postbox 3023
+;     76642 Bruchsal
+;     Tel: +49 7251/75-1780..1787
+;     Fax: +49 7251/75-1769
+;
+; This GSD file uses additional files:
+;          sew6009n.bmp
+;          sew6009s.bmp
+;          sew6009n.dib
+;          sew6009s.dib
+;
+;  GSD syntax is checked with 
+;     - GSD Editor V5.0 (Profibus User Group)
+;     - HWKonfig STEP7 Version 5.4 (Siemens)
+;     - TwinCat System Manager 2.10.0 (Beckhoff)
+;
+;
+; File version history:
+; ---------------------
+;
+;    V5.30 / 16.04.2007
+;         Repeater_Ctrl_Sig = 2 ->TTL
+;
+;    V5.20 / 10.01.2007
+;          Standard Slotdefinition changed
+;
+;    V5.10 / 10.01.2007
+;          Profisafeslot für SEW-Safetyoption
+;
+;    V5.00 / 17.05.2006
+;          1st release
+; 
+;------------------------------------------------------------------------------
+; The latest version of this GSD file can be downloaded from the SEW homepage,
+; URL http://www.SEW-EURODRIVE.de.
+;===========================================================================
+;
+#Profibus_DP
+;===============================================================================
+; General DP Key Words
+;===============================================================================
+GSD_Revision = 5                      ;
+Vendor_Name = "SEW-EURODRIVE"         ;
+Model_Name = "Gateway DFP/DFS"        ;
+Revision="5.3"                        ;
+Ident_Number = 0x6009                 ;
+Protocol_Ident=0                      ;
+Station_Type=0                        ;
+FMS_supp = 0                          ;
+Hardware_Release="10"                 ;
+Software_Release="10"                 ;
+9.6_supp = 1                          ;
+19.2_supp = 1                         ;
+93.75_supp = 1                        ;
+187.5_supp = 1                        ;
+500_supp = 1                          ;
+1.5M_supp = 1                         ;
+3M_supp = 1                           ;
+6M_supp = 1                           ;
+12M_supp = 1                          ;
+MaxTsdr_9.6 = 15                      ;
+MaxTsdr_19.2 = 15                     ;
+MaxTsdr_93.75 = 15                    ;
+MaxTsdr_187.5 = 15                    ;
+MaxTsdr_500 = 15                      ;
+MaxTsdr_1.5M = 25                     ;
+MaxTsdr_3M = 50                       ;12MBaud modules
+MaxTsdr_6M = 100                      ;
+MaxTsdr_12M = 200                     ;
+Redundancy = 0                        ;
+Repeater_Ctrl_Sig = 2                 ;
+24V_Pins = 0                          ;
+Implementation_Type = "DPC31"         ;
+Bitmap_Device = "sew6009n"            ;
+Bitmap_Diag = "sew6009s"              ;
+
+;===============================================================================
+; Basic DP-Slave Related Key Words
+;===============================================================================
+Info_Text = "GSD V5.30 for Gateway DFP/DFS"
+Freeze_Mode_supp = 1                  ;
+Sync_Mode_supp = 1                    ;
+Auto_Baud_supp = 1                    ;
+Set_Slave_Add_supp = 0                ;
+Min_Slave_Intervall=1
+Modular_Station = 1                   
+Fail_Safe=1
+Max_Diag_Data_Len=16
+Slave_Family=1@SEW@DPV1
+
+Publisher_supp = 1                    ;
+Ident_Maintenance_supp = 1            ;
+
+;**********************************************************
+;Text-Definitionen fuer User_Prm_Data
+;**********************************************************
+
+PrmText                 =       1
+;Text(0)                 =       "SIL 1"
+;Text(1)                 =       "SIL 2"
+Text(2)                 =       "SIL 3"
+;Text(3)                 =       "No SIL"
+EndPrmText
+
+PrmText                 =       2
+Text(0)                 =       "No Check"
+;Text(1)                 =       "Check"
+EndPrmText
+
+;Text-Definition fuer CRC-Length
+PrmText                 =        3
+Text(0)                 =       "3 Byte CRC (only PROFIsafe V2)"
+Text(1)                 =       "2 Byte CRC (only PROFIsafe V1)"
+;Text(2)                 =       "4 Byte CRC"
+EndPrmText
+
+PrmText                 =        4
+Text(0)                 =       "PROFIsafe V1"
+Text(1)                 =       "PROFIsafe V2"
+EndPrmText
+
+;**********************************************************
+; Ext-User-Prm-Data-Def-List
+;**********************************************************
+
+ExtUserPrmData          = 1 "F_Check_SeqNr"     ; Referenznummer 1
+Bit(0) 0 0-0                                    ; Default = 0
+Prm_Text_Ref            = 2                     ; Verweis auf Text-Definition 2
+EndExtUserPrmData
+
+
+ExtUserPrmData          = 2 "F_SIL"             ;ExtUserPrmData         = 3 "F_SIL"
+BitArea(2-3) 2 2-2                              ;BitArea(2-3) 2 0-2                
+Prm_Text_Ref            = 1
+EndExtUserPrmData
+
+ExtUserPrmData          = 3 "F_CRC_Length"      ;ExtUserPrmData         = 4 "F_CRC_Length" 
+BitArea(4-5) 0 0-1                              ;BitArea(4-5) 1 1-2                        
+Prm_Text_Ref            = 3
+EndExtUserPrmData
+
+ExtUserPrmData          = 4 "F_Par_Version"     ;ExtUserPrmData         = 5 "F_Par_Version"
+BitArea(6-7) 1 0-1                              ;BitArea(6-7) 0 0-0                        
+Prm_Text_Ref            = 4
+EndExtUserPrmData
+
+ExtUserPrmData          = 5 "F_Source_Add"      ;ExtUserPrmData          = 6 "F_Source_Add" 
+Unsigned16 1 1-65534
+EndExtUserPrmData
+
+ExtUserPrmData          = 6 "F_Dest_Add"        ;ExtUserPrmData          = 7 "F_Dest_Add"
+Unsigned16 255 1-1022                           ;Unsigned16 1 1-65534                    
+EndExtUserPrmData
+
+ExtUserPrmData          = 7 "F_WD_Time"         ;ExtUserPrmData          = 8 "F_WD_Time" 
+Unsigned16 150 1-65535                          ;Unsigned16 100 1-10000                  
+EndExtUserPrmData
+;CRC ueber die Defaultwerte:
+ExtUserPrmData          = 8 "F_Par_CRC"         ;ExtUserPrmData          = 9 "F_Par_CRC"
+Unsigned16 0xD56C 0-65535                       ;Unsigned16 5444 0-65535                
+EndExtUserPrmData
+
+Max_User_Prm_Data_Len       = 24
+Ext_User_Prm_Data_Const(0)  = 0x00,0x00,0x00
+;
+UnitDiagType			= 129
+;=======================================================
+; PROFIsafe modulestatus (acc. PROFIsafe profile)
+;=======================================================
+X_Unit_Diag_Area=24-31
+X_Value(64)="Mismatch of F_Dest_Add"            
+X_Value(65)="F_Dest_Add not valid"              
+X_Value(66)="F_Source_Add not valid"                 
+X_Value(67)="F_WD_Time is 0 ms"                 
+X_Value(68)="F_SIL exceeds SIL f. application" 
+X_Value(69)="F_CRC_Length does not match"   
+X_Value(70)="F-Parameter set incorrect"                           
+X_Value(71)="CRC1-Fault"                                                     
+X_Value(72)="Reserved for further use"
+X_Value(73)="Reserved for further use"
+X_Value(74)="Reserved for further use"
+X_Value(75)="Reserved for further use"
+X_Value(76)="Reserved for further use"
+X_Value(77)="Reserved for further use"
+X_Value(78)="Reserved for further use"
+X_Value(79)="Reserved for further use"
+X_Unit_Diag_Area_End
+;=======================================================
+; PROFIsafe modulestatus (manufacturer (SEW) specific)
+;=======================================================
+X_Unit_Diag_Area=40-47
+X_Value(01) = "Internal sequence fault"       
+X_Value(02) = "Internal system fault"         
+X_Value(03) = "Communication fault"           
+X_Value(04) = "Circuitry supply voltage fault"
+X_Value(05) = "Load supply voltage fault"     
+X_Value(20) = "Internal fault failsafe input"  
+X_Value(21) = "Short-circuit failsafe input"   
+X_Value(50) = "Internal fault failsafe output" 
+X_Value(51) = "Short-circuit failsafe output"  
+X_Value(52) = "Overload failsafe output"       
+X_Value(111)= "Internal communication timeout"       
+X_Value(127)= "F init fault"       
+X_Unit_Diag_Area_End
+EndUnitDiagType
+;
+;
+;
+;
+;The Profibus-DP slave supports different modules.
+;You can choose of the following DP-Configurations:
+
+;Slot1: Empty/ProfisafeModul
+;Slot2: Empty/ParameterchannelModul
+;Slot3: PdModul
+
+;
+Max_Module = 3                     ;
+Max_Input_Len =  136               ;
+Max_Output_Len = 136               ;
+Max_Data_Len =   272               ;
+;
+
+
+;Configuration: Default Data (No Data)
+Module = "Empty" 0x00;
+1
+EndModule
+
+;=========================================================
+;
+;Configuration: 2 byte F I/O-Data
+Module = "F-Module I/O (2 byte)         " 0xC6, 0x85, 0x85, 0x05, 0x05, 0x0A, 0x05, 0x05, 0x0A ;
+2
+F_IO_StructureDescCRC=0x1607
+
+;==============================================================================================
+; NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU NEU  
+;==============================================================================================
+;
+;  F-Prm-Flag1 Bit:  7  6  5  4  3  2  1  0
+;                    |  |  |  |  |  |  |  +-- F_Check_SeqNr = 1 "Check"
+;                    |  |  |  |  |  |  +----- F_Check_iPar = 0
+;                    |  |  |  |  +--+-------- F_SIL = (10b = SIL 3)
+;                    |  |  +--+-------------- F_CRC_Length = 00b (3 Byte CRC)
+;                    +--+-------------------- Reserved
+;
+;  F-Prm-Flag2 Bit:  7  6  5  4  3  2  1  0
+;                    |  |  |  |  |  +--+--+-- Reserved
+;                    |  |  +--+--+----------- F_Block_ID 
+;                    +--+-------------------- F_Par_Version = 01 = V2 , 00 = V1 
+;
+;
+F_Ext_Module_Prm_Data_Len         = 14              
+F_Ext_User_Prm_Data_Const(0)      = 0xE           ;Blocklänge F-Parameter
+F_Ext_User_Prm_Data_Const(1)      = 0x5           ;Kennung F-Parameter
+F_Ext_User_Prm_Data_Const(2)      = 0             ;Steckplatz des F-Moduls
+F_Ext_User_Prm_Data_Const(3)      = 0             ;Reserviert
+
+F_Ext_User_Prm_Data_Ref(4)        = 1             ;F-Param-Flag1 (Motorola-Format einhalten!)
+F_Ext_User_Prm_Data_Ref(4)        = 2             ;F-Param-Flag1 (Motorola-Format einhalten!)
+F_Ext_User_Prm_Data_Ref(4)        = 3             ;F-Param-Flag1 (Motorola-Format einhalten!)
+F_Ext_User_Prm_Data_Ref(5)        = 4             ;F-Param-Flag2 (Motorola-Format einhalten!)
+F_Ext_User_Prm_Data_Ref(6)        = 5             ;F-Source-Adr
+F_Ext_User_Prm_Data_Ref(8)        = 6             ;F-Dest-Adr
+F_Ext_User_Prm_Data_Ref(10)       = 7             ;F-WD-Time
+F_Ext_User_Prm_Data_Ref(12)       = 8             ;F-CRC1
+
+;CRC über die Parameterbeschreibungsdaten
+F_ParamDescCRC = 0x91CB ;Aktuelle F-Parameter-CRC1 (wie in STEP7 DP-Slave Eigenschaften PROFIsafe)
+EndModule
+;=========================================================
+
+;
+;Configuration: 8 byte parameter channel
+;
+Module = "Parameter channel (8 byte)" 0xC0, 0x87, 0x87;
+3
+;Module_Offset = 1
+EndModule
+;
+;=========================================================
+;
+;Configuration:  Display text
+Module = "----ONE module for all drives" 0x00;
+4
+EndModule
+;
+;Configuration:  One modul for 1 drive (3 words process data)  
+Module = "AS 1 Drive  (3 PD)         " 0xC0, 0xC2, 0xC2  ;
+5
+EndModule
+;
+;Configuration:  One modul for 2 drives (6 words process data)  
+Module = "AS 2 Drives (6 PD)         " 0xC0, 0xC5, 0xC5  ;
+6
+EndModule
+;
+;Configuration:  One modul for 3 drives (9 words process data)  
+Module = "AS 3 Drives (9 PD)         " 0xC0, 0xC8, 0xC8  ;
+7
+EndModule
+;
+;Configuration:  One modul for 4 drives (12 words process data)  
+Module = "AS 4 Drives (12 PD)        " 0xC0, 0xCB, 0xCB  ;
+8
+EndModule
+;
+;Configuration:  One modul for 5 drives (15 words process data)  
+Module = "AS 5 Drives (15 PD)        " 0xC0, 0xCE, 0xCE  ;
+9
+EndModule
+;
+;Configuration:  One modul for 6 drives (18 words process data)  
+Module = "AS 6 Drives (18 PD)        " 0xC0, 0xD1, 0xD1  ;
+10
+EndModule
+;
+;Configuration: One modul for 7 drives (21 words process data)  
+Module = "AS 7 Drives (21 PD)        " 0xC0, 0xD4, 0xD4  ;
+11
+EndModule
+;
+;Configuration: One modul for 8 drives (24 words process data)  
+Module = "AS 8 Drives (24 PD)        " 0xC0, 0xD7, 0xD7  ;
+12
+EndModule
+;
+;Configuration:  Display text
+Module = "----ONE module per drive" 0x00;
+13
+EndModule
+;
+;Configuration: One modul per drive for 1 drive (1 x 3 words process data)  
+Module = "AS 1 Drive  (1 x 3 PD)        " 0xC0, 0xC2, 0xC2  ;
+14
+EndModule
+;
+;Configuration: One modul per drive for 2 drive (2 x 3 words process data)  
+Module = "AS 2 Drives (2 x 3 PD)        " 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2  ;
+15
+EndModule
+;
+;Configuration: One modul per drive for 3 drive (3 x 3 words process data)  
+Module = "AS 3 Drives (3 x 3 PD)        " 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2  ;
+16
+EndModule
+;
+;Configuration: One modul per drive for 4 drive (4 x 3 words process data)  
+Module = "AS 4 Drives (4 x 3 PD)        " 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2  ;
+17
+EndModule
+;
+;Configuration: One modul per drive for 5 drive (5 x 3 words process data)  
+Module = "AS 5 Drives (5 x 3 PD)        " 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2  ;
+18
+EndModule
+;
+;Configuration: One modul per drive for 6 drive (6 x 3 words process data)  
+Module = "AS 6 Drives (6 x 3 PD)        " 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2  ;
+19
+EndModule
+;
+;Configuration: One modul per drive for 7 drive (7 x 3 words process data)  
+Module = "AS 7 Drives (7 x 3 PD)        " 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2  ;
+20
+EndModule
+;
+;Configuration: One modul per drive for 8 drive (8 x 3 words process data)  
+Module = "AS 8 Drives (8 x 3 PD)        " 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2, 0xC0, 0xC2, 0xC2  ;
+21
+EndModule
+;
+
+SlotDefinition
+Slot(1) = "PROFIsafe-Channel" 1 1,2
+Slot(2) = "Param-Channel" 1 1,3
+;Slot(3) = "PD-Channel" 11 5,6,7,8,9,10,11,13,14,15,16,17,18,19,20,21
+EndSlotDefinition
+
+;
+; DPV1 definitions
+;==================================
+;
+DPV1_Slave = 1
+Prm_Block_Structure_supp  = 1          ; 1 = Blockstruktur unterstützt
+C1_Read_Write_supp = 1
+C2_Read_Write_supp = 1
+C1_Max_Data_Len = 240
+C2_Max_Data_Len = 240
+C1_Response_Timeout = 100
+C2_Response_Timeout = 100
+C1_Read_Write_required = 0
+C2_Read_Write_required = 0
+C2_Max_Count_Channels = 2
+Max_Initiate_PDU_Length = 64
+Diagnostic_Alarm_supp = 0     
+Process_Alarm_supp = 0
+Pull_Plug_Alarm_supp = 0
+Status_Alarm_supp = 0
+Update_Alarm_supp = 0
+Manufacturer_Specific_Alarm_supp = 0
+Extra_Alarm_SAP_supp = 0
+Alarm_Sequence_Mode_Count = 0
+Alarm_Type_Mode_supp = 0
+Diagnostic_Alarm_required = 0
+Process_Alarm_required = 0
+Pull_Plug_Alarm_required = 0
+Status_Alarm_required = 0
+Update_Alarm_required = 0
+Manufacturer_Specific_Alarm_required = 0
+DPV1_Data_Types = 0
+WD_Base_1ms_supp = 1
+Check_Cfg_Mode = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
