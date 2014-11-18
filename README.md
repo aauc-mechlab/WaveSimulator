@@ -1,10 +1,10 @@
-Authors
-================
-F. Sanfilippo, L. I. Hatledal, H. Zhang, W. Rekdalsbakken and K. Y. Pettersen
-
 Students
 ================
 Håkon Østrem, Håkon Eikrem and Bjarne Humlen
+
+Authors
+================
+F. Sanfilippo, L. I. Hatledal, H. Zhang, W. Rekdalsbakken and K. Y. Pettersen
 
 Acknowledgements
 ================
